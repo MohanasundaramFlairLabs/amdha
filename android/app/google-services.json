@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "889498919566",
+    "project_id": "amdha-60eda",
+    "storage_bucket": "amdha-60eda.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:889498919566:android:eb82df12cd69fbb62c5fdf",
+        "android_client_info": {
+          "package_name": "com.amdha.amdha"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMjJbX6nmOZX3P1kMCoTjWg4Omox5_18Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:889498919566:android:7ec6c4640ebd22052c5fdf",
+        "android_client_info": {
+          "package_name": "com.flairlabs.amdha"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMjJbX6nmOZX3P1kMCoTjWg4Omox5_18Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
