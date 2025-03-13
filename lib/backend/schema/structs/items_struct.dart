@@ -12,11 +12,17 @@ class ItemsStruct extends BaseStruct {
     String? contentType,
     String? addedBy,
     String? uri,
+    String? thumbnailUrl,
+    String? id,
+    String? educationKey,
   })  : _title = title,
         _description = description,
         _contentType = contentType,
         _addedBy = addedBy,
-        _uri = uri;
+        _uri = uri,
+        _thumbnailUrl = thumbnailUrl,
+        _id = id,
+        _educationKey = educationKey;
 
   // "title" field.
   String? _title;
@@ -53,12 +59,36 @@ class ItemsStruct extends BaseStruct {
 
   bool hasUri() => _uri != null;
 
+  // "thumbnail_url" field.
+  String? _thumbnailUrl;
+  String get thumbnailUrl => _thumbnailUrl ?? '';
+  set thumbnailUrl(String? val) => _thumbnailUrl = val;
+
+  bool hasThumbnailUrl() => _thumbnailUrl != null;
+
+  // "id" field.
+  String? _id;
+  String get id => _id ?? '';
+  set id(String? val) => _id = val;
+
+  bool hasId() => _id != null;
+
+  // "education_key" field.
+  String? _educationKey;
+  String get educationKey => _educationKey ?? '';
+  set educationKey(String? val) => _educationKey = val;
+
+  bool hasEducationKey() => _educationKey != null;
+
   static ItemsStruct fromMap(Map<String, dynamic> data) => ItemsStruct(
         title: data['title'] as String?,
         description: data['description'] as String?,
         contentType: data['contentType'] as String?,
         addedBy: data['addedBy'] as String?,
         uri: data['uri'] as String?,
+        thumbnailUrl: data['thumbnail_url'] as String?,
+        id: data['id'] as String?,
+        educationKey: data['education_key'] as String?,
       );
 
   static ItemsStruct? maybeFromMap(dynamic data) =>
@@ -70,6 +100,9 @@ class ItemsStruct extends BaseStruct {
         'contentType': _contentType,
         'addedBy': _addedBy,
         'uri': _uri,
+        'thumbnail_url': _thumbnailUrl,
+        'id': _id,
+        'education_key': _educationKey,
       }.withoutNulls;
 
   @override
@@ -92,6 +125,18 @@ class ItemsStruct extends BaseStruct {
         ),
         'uri': serializeParam(
           _uri,
+          ParamType.String,
+        ),
+        'thumbnail_url': serializeParam(
+          _thumbnailUrl,
+          ParamType.String,
+        ),
+        'id': serializeParam(
+          _id,
+          ParamType.String,
+        ),
+        'education_key': serializeParam(
+          _educationKey,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -123,6 +168,21 @@ class ItemsStruct extends BaseStruct {
           ParamType.String,
           false,
         ),
+        thumbnailUrl: deserializeParam(
+          data['thumbnail_url'],
+          ParamType.String,
+          false,
+        ),
+        id: deserializeParam(
+          data['id'],
+          ParamType.String,
+          false,
+        ),
+        educationKey: deserializeParam(
+          data['education_key'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -135,12 +195,23 @@ class ItemsStruct extends BaseStruct {
         description == other.description &&
         contentType == other.contentType &&
         addedBy == other.addedBy &&
-        uri == other.uri;
+        uri == other.uri &&
+        thumbnailUrl == other.thumbnailUrl &&
+        id == other.id &&
+        educationKey == other.educationKey;
   }
 
   @override
-  int get hashCode => const ListEquality()
-      .hash([title, description, contentType, addedBy, uri]);
+  int get hashCode => const ListEquality().hash([
+        title,
+        description,
+        contentType,
+        addedBy,
+        uri,
+        thumbnailUrl,
+        id,
+        educationKey
+      ]);
 }
 
 ItemsStruct createItemsStruct({
@@ -149,6 +220,9 @@ ItemsStruct createItemsStruct({
   String? contentType,
   String? addedBy,
   String? uri,
+  String? thumbnailUrl,
+  String? id,
+  String? educationKey,
 }) =>
     ItemsStruct(
       title: title,
@@ -156,4 +230,7 @@ ItemsStruct createItemsStruct({
       contentType: contentType,
       addedBy: addedBy,
       uri: uri,
+      thumbnailUrl: thumbnailUrl,
+      id: id,
+      educationKey: educationKey,
     );

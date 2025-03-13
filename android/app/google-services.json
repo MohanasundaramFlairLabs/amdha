@@ -1,40 +1,21 @@
 {
   "project_info": {
-    "project_number": "889498919566",
-    "project_id": "amdha-60eda",
-    "storage_bucket": "amdha-60eda.appspot.com"
+    "project_number": "236307181739",
+    "project_id": "amdha-dev",
+    "storage_bucket": "amdha-dev.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:889498919566:android:eb82df12cd69fbb62c5fdf",
+        "mobilesdk_app_id": "1:236307181739:android:5a430084aba1d54fbdc7ee",
         "android_client_info": {
-          "package_name": "com.amdha.amdha"
+          "package_name": "com.amdha.health"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCMjJbX6nmOZX3P1kMCoTjWg4Omox5_18Q"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:889498919566:android:7ec6c4640ebd22052c5fdf",
-        "android_client_info": {
-          "package_name": "com.flairlabs.amdha"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCMjJbX6nmOZX3P1kMCoTjWg4Omox5_18Q"
+          "current_key": "AIzaSyDAVsm9nxWqTx42Is8KrsQQvdJ4JMlS4xY"
         }
       ],
       "services": {

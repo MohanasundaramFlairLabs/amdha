@@ -1,0 +1,5 @@
+{
+  "baseUrl": "https://appdev.amdha.health",
+"loginUrl": "https://appdev.amdha.health/v1/oauth/login?client_id=ad5cfcb1-353c-491e-900c-43dca4877aae",
+"logOutUrl": "https://auth.amdha.health/oauth2/logout?client_id=ad5cfcb1-353c-491e-900c-43dca4877aae"
+}

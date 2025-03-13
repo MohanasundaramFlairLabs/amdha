@@ -53,16 +53,19 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 
+
 	<key>NSCameraUsageDescription</key>
-    <string>In order to take a picture or video, this app requires permission to access the camera.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-    <string>In order to upload data, this app requires permission to access the photo library.</string>
+    <string>Used to capture user details</string>
 	<key>NSMicrophoneUsageDescription</key>
     <string>Used to record user voice</string>
 	<key>PermissionGroupNotification</key>
     <string>Usde to give push notifiocation on medicine remainders</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>Used to allow user to upload medical documents</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
     <string>Used to fetch user current location</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+    <string>Used for video consultation</string>
 
 
 	<key>UILaunchStoryboardName</key>

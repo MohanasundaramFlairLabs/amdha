@@ -1,4 +1,4 @@
-package com.amdha.amdha
+package com.amdha.health
 
 import io.flutter.embedding.android.FlutterActivity
 

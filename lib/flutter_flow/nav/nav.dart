@@ -5,14 +5,16 @@ import 'package:provider/provider.dart';
 
 import '/backend/schema/structs/index.dart';
 
-import '/index.dart';
-import '/main.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+
+import '/index.dart';
 
 export 'package:go_router/go_router.dart';
 export 'serialization_util.dart';
 
 const kTransitionInfoKey = '__transition_info__';
+
+GlobalKey<NavigatorState> appNavigatorKey = GlobalKey<NavigatorState>();
 
 class AppStateNotifier extends ChangeNotifier {
   AppStateNotifier._();
@@ -32,6 +34,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
+      navigatorKey: appNavigatorKey,
       errorBuilder: (context, state) => appStateNotifier.showSplashImage
           ? Builder(
               builder: (context) => Container(
@@ -42,7 +45,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 ),
               ),
             )
-          : const NavBarPage(),
+          : LaunchWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
@@ -57,62 +60,745 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                     ),
                   ),
                 )
-              : const NavBarPage(),
+              : LaunchWidget(),
         ),
         FFRoute(
-          name: 'HomePage',
-          path: '/homePage',
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'HomePage')
-              : const HomePageWidget(),
+          name: HomePageWidget.routeName,
+          path: HomePageWidget.routePath,
+          builder: (context, params) => HomePageWidget(
+            index: params.getParam(
+              'index',
+              ParamType.int,
+            ),
+            doScan: params.getParam(
+              'doScan',
+              ParamType.bool,
+            ),
+            isFromNotification: params.getParam(
+              'isFromNotification',
+              ParamType.bool,
+            ),
+            taskId: params.getParam(
+              'taskId',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
-          name: 'MedicationPage',
-          path: '/medicationPage',
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'MedicationPage')
-              : const MedicationPageWidget(),
+          name: AdditionalDetailsScreenWidget.routeName,
+          path: AdditionalDetailsScreenWidget.routePath,
+          builder: (context, params) => AdditionalDetailsScreenWidget(
+            isUpdate: params.getParam(
+              'isUpdate',
+              ParamType.bool,
+            ),
+          ),
         ),
         FFRoute(
-          name: 'VitalsPage',
-          path: '/vitalsPage',
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'VitalsPage')
-              : const VitalsPageWidget(),
+          name: ConsentScreenWidget.routeName,
+          path: ConsentScreenWidget.routePath,
+          builder: (context, params) => ConsentScreenWidget(
+            isFromMenu: params.getParam(
+              'isFromMenu',
+              ParamType.bool,
+            ),
+          ),
         ),
         FFRoute(
-          name: 'EducationPage',
-          path: '/educationPage',
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'EducationPage')
-              : const EducationPageWidget(),
+          name: SubscriptionScreenWidget.routeName,
+          path: SubscriptionScreenWidget.routePath,
+          builder: (context, params) => SubscriptionScreenWidget(
+            isFromPregnancyProgram: params.getParam(
+              'isFromPregnancyProgram',
+              ParamType.bool,
+            ),
+          ),
         ),
         FFRoute(
-          name: 'MorePage',
-          path: '/morePage',
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'MorePage')
-              : const MorePageWidget(),
+          name: FileUploadPageWidget.routeName,
+          path: FileUploadPageWidget.routePath,
+          builder: (context, params) => FileUploadPageWidget(),
         ),
         FFRoute(
-          name: 'WelcomeComponent',
-          path: '/welcomeComponent',
-          builder: (context, params) => const WelcomeComponentWidget(),
+          name: FaqPageWidget.routeName,
+          path: FaqPageWidget.routePath,
+          builder: (context, params) => FaqPageWidget(),
         ),
         FFRoute(
-          name: 'AdditionalDetailsScreen',
-          path: '/additionalDetailsScreen',
-          builder: (context, params) => const AdditionalDetailsScreenWidget(),
+          name: JournalPageWidget.routeName,
+          path: JournalPageWidget.routePath,
+          builder: (context, params) => JournalPageWidget(
+            question: params.getParam(
+              'question',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
-          name: 'ConsentScreen',
-          path: '/consentScreen',
-          builder: (context, params) => const ConsentScreenWidget(),
+          name: ScanResultWidget.routeName,
+          path: ScanResultWidget.routePath,
+          builder: (context, params) => ScanResultWidget(),
         ),
         FFRoute(
-          name: 'SubscriptionScreen',
-          path: '/subscriptionScreen',
-          builder: (context, params) => const SubscriptionScreenWidget(),
+          name: ScanHistoryWidget.routeName,
+          path: ScanHistoryWidget.routePath,
+          builder: (context, params) => ScanHistoryWidget(),
+        ),
+        FFRoute(
+          name: SetgoalWidget.routeName,
+          path: SetgoalWidget.routePath,
+          builder: (context, params) => SetgoalWidget(
+            vitalName: params.getParam(
+              'vitalName',
+              ParamType.String,
+            ),
+            isFromGoal: params.getParam(
+              'isFromGoal',
+              ParamType.bool,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: FreeScanPageWidget.routeName,
+          path: FreeScanPageWidget.routePath,
+          builder: (context, params) => FreeScanPageWidget(),
+        ),
+        FFRoute(
+          name: LaunchWidget.routeName,
+          path: LaunchWidget.routePath,
+          builder: (context, params) => LaunchWidget(
+            code: params.getParam(
+              'code',
+              ParamType.String,
+            ),
+            tenant: params.getParam(
+              'tenant',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: LoginWidget.routeName,
+          path: LoginWidget.routePath,
+          builder: (context, params) => LoginWidget(
+            loginurl: params.getParam(
+              'loginurl',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: FreeScanLaunchPageWidget.routeName,
+          path: FreeScanLaunchPageWidget.routePath,
+          builder: (context, params) => FreeScanLaunchPageWidget(),
+        ),
+        FFRoute(
+          name: CareplixWebviewWidget.routeName,
+          path: CareplixWebviewWidget.routePath,
+          builder: (context, params) => CareplixWebviewWidget(
+            weight: params.getParam(
+              'weight',
+              ParamType.double,
+            ),
+            height: params.getParam(
+              'height',
+              ParamType.double,
+            ),
+            posture: params.getParam(
+              'posture',
+              ParamType.String,
+            ),
+            dob: params.getParam(
+              'dob',
+              ParamType.String,
+            ),
+            gender: params.getParam(
+              'gender',
+              ParamType.String,
+            ),
+            scanType: params.getParam(
+              'scanType',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: EditMedicationWidget.routeName,
+          path: EditMedicationWidget.routePath,
+          builder: (context, params) => EditMedicationWidget(
+            medication: params.getParam(
+              'medication',
+              ParamType.DataStruct,
+              isList: false,
+              structBuilder: MedicationModelStruct.fromSerializableMap,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: UpcomingConsultationPageWidget.routeName,
+          path: UpcomingConsultationPageWidget.routePath,
+          builder: (context, params) => UpcomingConsultationPageWidget(),
+        ),
+        FFRoute(
+          name: EducationPageWidget.routeName,
+          path: EducationPageWidget.routePath,
+          builder: (context, params) => EducationPageWidget(),
+        ),
+        FFRoute(
+          name: WebLoginWidget.routeName,
+          path: WebLoginWidget.routePath,
+          builder: (context, params) => WebLoginWidget(
+            loginUrl: params.getParam(
+              'loginUrl',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: PromotionWidget.routeName,
+          path: PromotionWidget.routePath,
+          builder: (context, params) => PromotionWidget(),
+        ),
+        FFRoute(
+          name: VideoCallWidget.routeName,
+          path: VideoCallWidget.routePath,
+          builder: (context, params) => VideoCallWidget(
+            videoLink: params.getParam(
+              'videoLink',
+              ParamType.String,
+            ),
+            connectionsModel: params.getParam(
+              'connectionsModel',
+              ParamType.DataStruct,
+              isList: false,
+              structBuilder: ConnectionsModelStruct.fromSerializableMap,
+            ),
+            waitTime: params.getParam(
+              'waitTime',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: UserProfileWidget.routeName,
+          path: UserProfileWidget.routePath,
+          builder: (context, params) => UserProfileWidget(),
+        ),
+        FFRoute(
+          name: OrganDonationWidget.routeName,
+          path: OrganDonationWidget.routePath,
+          builder: (context, params) => OrganDonationWidget(),
+        ),
+        FFRoute(
+          name: JournalHomePageWidget.routeName,
+          path: JournalHomePageWidget.routePath,
+          builder: (context, params) => JournalHomePageWidget(),
+        ),
+        FFRoute(
+          name: AllConsultationHistoryWidget.routeName,
+          path: AllConsultationHistoryWidget.routePath,
+          builder: (context, params) => AllConsultationHistoryWidget(),
+        ),
+        FFRoute(
+          name: PPDetailedViewWidget.routeName,
+          path: PPDetailedViewWidget.routePath,
+          builder: (context, params) => PPDetailedViewWidget(
+            program: params.getParam(
+              'program',
+              ParamType.DataStruct,
+              isList: false,
+              structBuilder: ProgramsStruct.fromSerializableMap,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: DetailedConsultationHistoryWidget.routeName,
+          path: DetailedConsultationHistoryWidget.routePath,
+          builder: (context, params) => DetailedConsultationHistoryWidget(
+            data: params.getParam(
+              'data',
+              ParamType.DataStruct,
+              isList: false,
+              structBuilder: HistoryModelStruct.fromSerializableMap,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: BookFollowupWidget.routeName,
+          path: BookFollowupWidget.routePath,
+          builder: (context, params) => BookFollowupWidget(
+            doctor: params.getParam(
+              'doctor',
+              ParamType.DataStruct,
+              isList: false,
+              structBuilder: DoctorModelStruct.fromSerializableMap,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: SymptomTrackerWidget.routeName,
+          path: SymptomTrackerWidget.routePath,
+          builder: (context, params) => SymptomTrackerWidget(
+            category: params.getParam(
+              'category',
+              ParamType.String,
+            ),
+            severity: params.getParam(
+              'severity',
+              ParamType.String,
+            ),
+            taskId: params.getParam(
+              'taskId',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: PlanDetailsWidget.routeName,
+          path: PlanDetailsWidget.routePath,
+          builder: (context, params) => PlanDetailsWidget(),
+        ),
+        FFRoute(
+          name: EducationPreviewWidget.routeName,
+          path: EducationPreviewWidget.routePath,
+          builder: (context, params) => EducationPreviewWidget(
+            education: params.getParam(
+              'education',
+              ParamType.DataStruct,
+              isList: false,
+              structBuilder: ItemsStruct.fromSerializableMap,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: ExpiredPlansWidget.routeName,
+          path: ExpiredPlansWidget.routePath,
+          builder: (context, params) => ExpiredPlansWidget(
+            subscription: params.getParam<SubscriptionsStruct>(
+              'subscription',
+              ParamType.DataStruct,
+              isList: true,
+              structBuilder: SubscriptionsStruct.fromSerializableMap,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: PdfPreviewPageWidget.routeName,
+          path: PdfPreviewPageWidget.routePath,
+          builder: (context, params) => PdfPreviewPageWidget(
+            pdfuri: params.getParam(
+              'pdfuri',
+              ParamType.String,
+            ),
+            title: params.getParam(
+              'title',
+              ParamType.String,
+            ),
+            isFromTask: params.getParam(
+              'isFromTask',
+              ParamType.bool,
+            ),
+            task: params.getParam(
+              'task',
+              ParamType.DataStruct,
+              isList: false,
+              structBuilder: TasksStruct.fromSerializableMap,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: SymptomTrackerLaunchPageWidget.routeName,
+          path: SymptomTrackerLaunchPageWidget.routePath,
+          builder: (context, params) => SymptomTrackerLaunchPageWidget(
+            task: params.getParam(
+              'task',
+              ParamType.DataStruct,
+              isList: false,
+              structBuilder: TasksStruct.fromSerializableMap,
+            ),
+            onlyRecommendation: params.getParam(
+              'onlyRecommendation',
+              ParamType.bool,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: OnboradingPageWidget.routeName,
+          path: OnboradingPageWidget.routePath,
+          builder: (context, params) => OnboradingPageWidget(
+            task: params.getParam(
+              'task',
+              ParamType.DataStruct,
+              isList: false,
+              structBuilder: TasksStruct.fromSerializableMap,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: OnboardingQuestionarieWidget.routeName,
+          path: OnboardingQuestionarieWidget.routePath,
+          builder: (context, params) => OnboardingQuestionarieWidget(
+            task: params.getParam(
+              'task',
+              ParamType.DataStruct,
+              isList: false,
+              structBuilder: TasksStruct.fromSerializableMap,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: OnboardingCompleteMessageWidget.routeName,
+          path: OnboardingCompleteMessageWidget.routePath,
+          builder: (context, params) => OnboardingCompleteMessageWidget(
+            taskId: params.getParam(
+              'taskId',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: RecommendationsWidget.routeName,
+          path: RecommendationsWidget.routePath,
+          builder: (context, params) => RecommendationsWidget(
+            recommendations: params.getParam<RecommendationStruct>(
+              'recommendations',
+              ParamType.DataStruct,
+              isList: true,
+              structBuilder: RecommendationStruct.fromSerializableMap,
+            ),
+            recommendationType: params.getParam(
+              'recommendationType',
+              ParamType.String,
+            ),
+            taskId: params.getParam(
+              'taskId',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: HeartAgeLaunchPageWidget.routeName,
+          path: HeartAgeLaunchPageWidget.routePath,
+          builder: (context, params) => HeartAgeLaunchPageWidget(
+            task: params.getParam(
+              'task',
+              ParamType.DataStruct,
+              isList: false,
+              structBuilder: TasksStruct.fromSerializableMap,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: HeartAgeQuestionarieWidget.routeName,
+          path: HeartAgeQuestionarieWidget.routePath,
+          builder: (context, params) => HeartAgeQuestionarieWidget(
+            task: params.getParam(
+              'task',
+              ParamType.DataStruct,
+              isList: false,
+              structBuilder: TasksStruct.fromSerializableMap,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: HeartAgeCompleteMessageWidget.routeName,
+          path: HeartAgeCompleteMessageWidget.routePath,
+          builder: (context, params) => HeartAgeCompleteMessageWidget(
+            taskId: params.getParam(
+              'taskId',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: WHOLaunchPageWidget.routeName,
+          path: WHOLaunchPageWidget.routePath,
+          builder: (context, params) => WHOLaunchPageWidget(
+            task: params.getParam(
+              'task',
+              ParamType.DataStruct,
+              isList: false,
+              structBuilder: TasksStruct.fromSerializableMap,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: WHOQuestionarieWidget.routeName,
+          path: WHOQuestionarieWidget.routePath,
+          builder: (context, params) => WHOQuestionarieWidget(
+            task: params.getParam(
+              'task',
+              ParamType.DataStruct,
+              isList: false,
+              structBuilder: TasksStruct.fromSerializableMap,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: WHORecommendationsWidget.routeName,
+          path: WHORecommendationsWidget.routePath,
+          builder: (context, params) => WHORecommendationsWidget(
+            score: params.getParam(
+              'score',
+              ParamType.String,
+            ),
+            recommendations: params.getParam<RecommendationStruct>(
+              'recommendations',
+              ParamType.DataStruct,
+              isList: true,
+              structBuilder: RecommendationStruct.fromSerializableMap,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: FRATLaunchPageWidget.routeName,
+          path: FRATLaunchPageWidget.routePath,
+          builder: (context, params) => FRATLaunchPageWidget(
+            task: params.getParam(
+              'task',
+              ParamType.DataStruct,
+              isList: false,
+              structBuilder: TasksStruct.fromSerializableMap,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: FRATQuestionnarieWidget.routeName,
+          path: FRATQuestionnarieWidget.routePath,
+          builder: (context, params) => FRATQuestionnarieWidget(
+            task: params.getParam(
+              'task',
+              ParamType.DataStruct,
+              isList: false,
+              structBuilder: TasksStruct.fromSerializableMap,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: FRATThankYouPageWidget.routeName,
+          path: FRATThankYouPageWidget.routePath,
+          builder: (context, params) => FRATThankYouPageWidget(
+            taskId: params.getParam(
+              'taskId',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: FoodWelcomePageWidget.routeName,
+          path: FoodWelcomePageWidget.routePath,
+          builder: (context, params) => FoodWelcomePageWidget(),
+        ),
+        FFRoute(
+          name: FoodTrackerPageWidget.routeName,
+          path: FoodTrackerPageWidget.routePath,
+          builder: (context, params) => FoodTrackerPageWidget(),
+        ),
+        FFRoute(
+          name: ExerciseTrackerWelComePageWidget.routeName,
+          path: ExerciseTrackerWelComePageWidget.routePath,
+          builder: (context, params) => ExerciseTrackerWelComePageWidget(),
+        ),
+        FFRoute(
+          name: AddExercisePageWidget.routeName,
+          path: AddExercisePageWidget.routePath,
+          builder: (context, params) => AddExercisePageWidget(
+            setDate: params.getParam(
+              'setDate',
+              ParamType.String,
+            ),
+            vcxvfdv: params.getParam(
+              'vcxvfdv',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: ExercisePreviewPageWidget.routeName,
+          path: ExercisePreviewPageWidget.routePath,
+          builder: (context, params) => ExercisePreviewPageWidget(
+            exerciseData: params.getParam<ExerciseDataStruct>(
+              'exerciseData',
+              ParamType.DataStruct,
+              isList: true,
+              structBuilder: ExerciseDataStruct.fromSerializableMap,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: PreviewMealPageWidget.routeName,
+          path: PreviewMealPageWidget.routePath,
+          builder: (context, params) => PreviewMealPageWidget(),
+        ),
+        FFRoute(
+          name: VideoPreviewWidget.routeName,
+          path: VideoPreviewWidget.routePath,
+          builder: (context, params) => VideoPreviewWidget(
+            uri: params.getParam(
+              'uri',
+              ParamType.String,
+            ),
+            title: params.getParam(
+              'title',
+              ParamType.String,
+            ),
+            task: params.getParam(
+              'task',
+              ParamType.DataStruct,
+              isList: false,
+              structBuilder: TasksStruct.fromSerializableMap,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: HealthConnectWidget.routeName,
+          path: HealthConnectWidget.routePath,
+          builder: (context, params) => HealthConnectWidget(),
+        ),
+        FFRoute(
+          name: OCRResultPageWidget.routeName,
+          path: OCRResultPageWidget.routePath,
+          builder: (context, params) => OCRResultPageWidget(
+            fileUrl: params.getParam(
+              'fileUrl',
+              ParamType.String,
+            ),
+            reportId: params.getParam(
+              'reportId',
+              ParamType.String,
+            ),
+            documentType: params.getParam(
+              'documentType',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: DiabetesHistoryWidget.routeName,
+          path: DiabetesHistoryWidget.routePath,
+          builder: (context, params) => DiabetesHistoryWidget(),
+        ),
+        FFRoute(
+          name: MoodTrackerLaunchWidget.routeName,
+          path: MoodTrackerLaunchWidget.routePath,
+          builder: (context, params) => MoodTrackerLaunchWidget(
+            task: params.getParam(
+              'task',
+              ParamType.DataStruct,
+              isList: false,
+              structBuilder: TasksStruct.fromSerializableMap,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: AffirmationJournalLaunchWidget.routeName,
+          path: AffirmationJournalLaunchWidget.routePath,
+          builder: (context, params) => AffirmationJournalLaunchWidget(
+            title: params.getParam(
+              'title',
+              ParamType.String,
+            ),
+            subTitle: params.getParam(
+              'subTitle',
+              ParamType.String,
+            ),
+            secondaryTitle: params.getParam(
+              'secondaryTitle',
+              ParamType.String,
+            ),
+            listOfSuggetions: params.getParam<String>(
+              'listOfSuggetions',
+              ParamType.String,
+              isList: true,
+            ),
+            buttonTitle: params.getParam(
+              'buttonTitle',
+              ParamType.String,
+            ),
+            task: params.getParam(
+              'task',
+              ParamType.DataStruct,
+              isList: false,
+              structBuilder: TasksStruct.fromSerializableMap,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: PositiveAffirmationAnimationWidget.routeName,
+          path: PositiveAffirmationAnimationWidget.routePath,
+          builder: (context, params) => PositiveAffirmationAnimationWidget(
+            affirmations: params.getParam<String>(
+              'affirmations',
+              ParamType.String,
+              isList: true,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: JournalQuestionPageWidget.routeName,
+          path: JournalQuestionPageWidget.routePath,
+          builder: (context, params) => JournalQuestionPageWidget(
+            question: params.getParam(
+              'question',
+              ParamType.String,
+            ),
+            taskId: params.getParam(
+              'taskId',
+              ParamType.String,
+            ),
+            uniqueId: params.getParam(
+              'uniqueId',
+              ParamType.String,
+            ),
+            isFromTask: params.getParam(
+              'isFromTask',
+              ParamType.bool,
+            ),
+            taskType: params.getParam(
+              'taskType',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: OutroPageWidget.routeName,
+          path: OutroPageWidget.routePath,
+          builder: (context, params) => OutroPageWidget(
+            header: params.getParam(
+              'header',
+              ParamType.String,
+            ),
+            title: params.getParam(
+              'title',
+              ParamType.String,
+            ),
+            subTitle: params.getParam(
+              'subTitle',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: AffirmationsWidget.routeName,
+          path: AffirmationsWidget.routePath,
+          builder: (context, params) => AffirmationsWidget(
+            task: params.getParam(
+              'task',
+              ParamType.DataStruct,
+              isList: false,
+              structBuilder: TasksStruct.fromSerializableMap,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: MealHistoryPageWidget.routeName,
+          path: MealHistoryPageWidget.routePath,
+          builder: (context, params) => MealHistoryPageWidget(),
+        ),
+        FFRoute(
+          name: ExerciseHistoryPageWidget.routeName,
+          path: ExerciseHistoryPageWidget.routePath,
+          builder: (context, params) => ExerciseHistoryPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],
@@ -279,7 +965,7 @@ class TransitionInfo {
   final Duration duration;
   final Alignment? alignment;
 
-  static TransitionInfo appDefault() => const TransitionInfo(hasTransition: false);
+  static TransitionInfo appDefault() => TransitionInfo(hasTransition: false);
 }
 
 class RootPageContext {

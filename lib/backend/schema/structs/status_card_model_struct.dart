@@ -13,12 +13,14 @@ class StatusCardModelStruct extends BaseStruct {
     String? label,
     Color? iconColor,
     String? range,
+    String? type,
   })  : _color = color,
         _unit = unit,
         _icon = icon,
         _label = label,
         _iconColor = iconColor,
-        _range = range;
+        _range = range,
+        _type = type;
 
   // "color" field.
   Color? _color;
@@ -62,6 +64,13 @@ class StatusCardModelStruct extends BaseStruct {
 
   bool hasRange() => _range != null;
 
+  // "type" field.
+  String? _type;
+  String get type => _type ?? '';
+  set type(String? val) => _type = val;
+
+  bool hasType() => _type != null;
+
   static StatusCardModelStruct fromMap(Map<String, dynamic> data) =>
       StatusCardModelStruct(
         color: getSchemaColor(data['color']),
@@ -70,6 +79,7 @@ class StatusCardModelStruct extends BaseStruct {
         label: data['label'] as String?,
         iconColor: getSchemaColor(data['iconColor']),
         range: data['range'] as String?,
+        type: data['type'] as String?,
       );
 
   static StatusCardModelStruct? maybeFromMap(dynamic data) => data is Map
@@ -83,6 +93,7 @@ class StatusCardModelStruct extends BaseStruct {
         'label': _label,
         'iconColor': _iconColor,
         'range': _range,
+        'type': _type,
       }.withoutNulls;
 
   @override
@@ -109,6 +120,10 @@ class StatusCardModelStruct extends BaseStruct {
         ),
         'range': serializeParam(
           _range,
+          ParamType.String,
+        ),
+        'type': serializeParam(
+          _type,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -145,6 +160,11 @@ class StatusCardModelStruct extends BaseStruct {
           ParamType.String,
           false,
         ),
+        type: deserializeParam(
+          data['type'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -158,12 +178,13 @@ class StatusCardModelStruct extends BaseStruct {
         icon == other.icon &&
         label == other.label &&
         iconColor == other.iconColor &&
-        range == other.range;
+        range == other.range &&
+        type == other.type;
   }
 
   @override
-  int get hashCode =>
-      const ListEquality().hash([color, unit, icon, label, iconColor, range]);
+  int get hashCode => const ListEquality()
+      .hash([color, unit, icon, label, iconColor, range, type]);
 }
 
 StatusCardModelStruct createStatusCardModelStruct({
@@ -173,6 +194,7 @@ StatusCardModelStruct createStatusCardModelStruct({
   String? label,
   Color? iconColor,
   String? range,
+  String? type,
 }) =>
     StatusCardModelStruct(
       color: color,
@@ -181,4 +203,5 @@ StatusCardModelStruct createStatusCardModelStruct({
       label: label,
       iconColor: iconColor,
       range: range,
+      type: type,
     );

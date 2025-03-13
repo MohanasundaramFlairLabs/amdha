@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyAMweucggDctXFnm-Ka_0ENUrmJB0BnmKg</string>
+	<string>AIzaSyBuvS2KSeaAaM31nVyAeTxDUt6SxzsJnag</string>
 	<key>GCM_SENDER_ID</key>
-	<string>889498919566</string>
+	<string>236307181739</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.amdha.amdha</string>
+	<string>com.amdha.health</string>
 	<key>PROJECT_ID</key>
-	<string>amdha-60eda</string>
+	<string>amdha-dev</string>
 	<key>STORAGE_BUCKET</key>
-	<string>amdha-60eda.appspot.com</string>
+	<string>amdha-dev.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:889498919566:ios:54ab90cb44f27b652c5fdf</string>
+	<string>1:236307181739:ios:72dc26d02f3b4c09bdc7ee</string>
 </dict>
 </plist>
